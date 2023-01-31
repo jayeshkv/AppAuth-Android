@@ -213,7 +213,10 @@ public class TokenResponse {
          */
         @NonNull
         public Builder fromResponseJson(@NonNull JSONObject json) throws JSONException {
-            setTokenType(JsonUtil.getString(json, KEY_TOKEN_TYPE));
+            final String tokenType = JsonUtil.getStringIfDefined(json, KEY_TOKEN_TYPE);
+            if (tokenType != null) {
+                setTokenType(tokenType);
+            }
             setAccessToken(JsonUtil.getStringIfDefined(json, KEY_ACCESS_TOKEN));
             setAccessTokenExpirationTime(JsonUtil.getLongIfDefined(json, KEY_EXPIRES_AT));
             if (json.has(KEY_EXPIRES_IN)) {
